@@ -111,15 +111,12 @@ class NimAI:
 
     def best_future_reward(self, state):
         """
-        Given a state `state`, consider all possible `(state, action)`
-        pairs available in that state and return the maximum of all
-        of their Q-values.
-
-        Use 0 as the Q-value if a `(state, action)` pair has no
-        Q-value in `self.q`. If there are no available actions in
-        `state`, return 0.
+        Returns the maximum Q-value among all possible actions in the given state.
         """
-        raise NotImplementedError
+        available_actions = Nim.available_actions(state)
+        if not available_actions:
+            return 0
+        return max(self.get_q_value(state, action) for action in available_actions)
 
     def choose_action(self, state, epsilon=True):
         """
